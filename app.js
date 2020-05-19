@@ -7,6 +7,8 @@ const cors = require("cors");
 const bodyparser = require("body-parser");
 //Importing User model
 const User = require("./model/User");
+//Importing Courier model
+const Courier = require("./model/Courier")
 const {validateRegistration, validateLogin} = require("./validation");
 const bcrypt = require("bcryptjs");
 
@@ -19,13 +21,12 @@ const userRoute = require("./routes/user");
 const adminRoute = require("./routes/admin");
 
 //connectin to database
-mongoose.connect(process.env.DATABASE, {useNewUrlParser: true, useUnifiedTopology: true } )
+mongoose.connect(process.env.DB_LOCAL, {useNewUrlParser: true, useUnifiedTopology: true } )
     .then(()=>{console.log("Connected to Db")})
     .catch(err => {console.log("Error connecting to DB")})
 
 
 //Middlewares
-
 app.use(express.static("public"));
 //Importing the body-parser middle ware
 app.use(bodyparser.urlencoded({
@@ -71,6 +72,7 @@ app.get("/login", (req, res)=>{
     res.render("login")
 })
 
+//to delete an admin
 app.get("/api/admin/:id", (req, res)=>{
     User.findByIdAndRemove(req.params.id, (err, doc)=>{
         if(!err){
@@ -81,7 +83,17 @@ app.get("/api/admin/:id", (req, res)=>{
     })
 })
 
+app.get("/api/package", (req, res)=>{
+    Courier.find((err, doc)=>{
+        if(!err){
+            res.render("package", {doc: doc})
+        }else{
+            res.render("package", {message: "Error, No courier gotten"})
+        }
+    })  
+})
 
+//Register an admin
 app.post("/api/admin/registerAdmin", async(req, res)=>{
      //Using Joi to validate
    const {error} = validateRegistration(req.body);

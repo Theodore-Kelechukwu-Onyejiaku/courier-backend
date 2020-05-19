@@ -6,6 +6,7 @@ const Courier = require("../model/Courier");
 const {validateRegistration, validateLogin} = require("../validation");
 const bcrypt = require("bcryptjs");
 require("dotenv").config();
+const User = require("../model/User");
 
 //Importing JWT
 const jwt = require("jsonwebtoken")
@@ -78,7 +79,7 @@ router.post("/login", async (req, res)=>{
     //res.header("auth-token", token).send(token);
     //If email and password validation is correct  
 
-    res.render("viewCourier")
+    res.redirect("/api/viewCourier")
 })
 
 router.post("/addCourier", (req, res)=>{

@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  	<title>Admin Dashboard
+    </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+		
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="/css/style2.css">
+  </head>
+  <body>
+		
+		<div class="wrapper d-flex align-items-stretch ">
+			<nav id="sidebar">
+				<div class="p-4 pt-5">
+		  		<a href="#" class="img logo rounded-circle mb-5" style="background-image: url(/img/logo.jpg);"></a>
+	        <ul class="list-unstyled components mb-5">
+	          <li>
+	              <a href="/api/addCourier">Add Courier</a>
+	          </li>
+            <li>
+	              <a href="/api/viewCourier">View Couriers</a>
+	          </li>
+	        <div class="footer">
+	        </div>
+	      </div>
+    	</nav>
+
+        <!-- Page Content  -->
+      <div id="content" class="p-0 p-md-0">
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <div class="container-fluid">
+
+            <button type="button" id="sidebarCollapse" class="btn btn-primary">
+                <i class="fa fa-bars"></i>
+            </button>
+            <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fa fa-bars"></i>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="nav navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/api/viewCourier">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/api/addCourier">Add Courier</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+        <div class="container">
+          <% var error, message; %>
+          <h1 class="text-success text-center"><%= message %></h1>
+          <h3 class="text-danger text-center"><%= error %></h3>
+          <h3 class="text-danger text-center"></h3>
+          <div class="row">
+            <div class="col-1"></div>
+            <div class="col-10">
+              <form action="/api/addCourier" method="POST">
+                <input required type="hidden" name="_id" value="<%= courier._id %>">
+                <hr class="bg-danger">
+                <h3>Receivers Details</h3>
+                <div class="form-group d-flex">
+                    <i class="text-danger fa fa-user fa-3x"></i>
+                    <input required type="text" name="r_first_name" value="<%= courier.r_first_name%>" class="form-control" placeholder="First Name">
+                </div>
+                <div class="form-group d-flex">
+                    <i class="text-secondary fa fa-user fa-3x"></i>
+                    <input required type="text" name="r_last_name" value="<%= courier.r_last_name%>" class="form-control" placeholder="Last Name">
+                </div>
+                <div class="form-group d-flex">
+                    <i class="text-primary fa fa-home fa-3x"></i>
+                    <input required type="text" name="r_address" value="<%= courier.r_address%>" class="form-control" placeholder="Address">
+                </div>
+                <div class="form-group d-flex">
+                    <i class="text-nowrap fa fa-phone fa-3x"></i>
+                    <input required type="text" name="r_phone" class="form-control" value="<%= courier.r_phone%>" placeholder="Phone Number">
+                </div> 
+                <div class="form-group d-flex">
+                  <i class="text-warning fa fa-envelope fa-3x"></i><span> </span>
+                  <input required type="email" name="r_email" class="form-control" value="<%= courier.r_email%>"  placeholder="email">
+                </div> 
+                <div class="form-group d-flex">
+                  <i class="text-info fa fa-flag fa-3x"></i><span> </span>
+                  <input required  type="text" name="r_state" class="form-control" value="<%= courier.r_state%>" placeholder="State">
+                </div>
+                <hr class="bg-danger">
+
+
+                <h3>Shippers Details</h3>
+                <div class="form-group d-flex">
+                    <i class="text-danger fa fa-user fa-3x"></i>
+                    <input required type="text" name="s_first_name" class="form-control" value="<%= courier.s_first_name%>" placeholder="First Name">
+                </div>
+                <div class="form-group d-flex">
+                    <i class="text-primary fa fa-user fa-3x"></i>
+                    <input required type="text" name="s_last_name" value="<%= courier.s_last_name%>" class="form-control" placeholder="Last Name">
+                </div> 
+                <div class="form-group d-flex">
+                    <i class="text-success fa fa-home fa-3x"></i>
+                    <input required type="text" name="s_address" value="<%= courier.s_address%>" class="form-control" placeholder="Address">
+                </div>
+                <div class="form-group d-flex">
+                    <i class="text-danger fa fa-phone fa-3x"></i>
+                    <input required type="text" name="s_phone" value="<%= courier.s_phone%>" class="form-control" placeholder="Phone Number">
+                </div> 
+                <div class="form-group d-flex">
+                  <i class="text-warning fa fa-envelope fa-3x"></i><span> </span>
+                  <input required type="email" name="s_email" value="<%= courier.s_email%>" class="form-control" placeholder="email">
+                </div> 
+                <div class="form-group d-flex">
+                  <i class="text-info fa fa-flag fa-3x"></i><span> </span>
+                  <input required  type="text" name="s_state" value="<%= courier.s_state%>" class="form-control" placeholder="State">
+                </div>
+
+                <hr class="bg-danger"/>
+                <h3>Package Details</h3>
+                <div class="form-group">
+                    <label for="">Number Packages</label>
+                    <input required type="text" name="p_number" value="<%= courier.p_number%>" class="form-control" placeholder="Number Packages">
+                </div>
+                <div class="form-group">
+                    <label for="">Destination</label>
+                    <input required type="text" name="p_destination" value="<%= courier.p_destination%>" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="">Weight</label>
+                    <input required type="text" name="p_weight" value="<%= courier.p_weight%>" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="">Shipping Mode</label>
+                    <input required type="text" name="p_mode" value="<%= courier.p_mode%>" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="">Specify Items here</label>
+                    <input required type="text" name="p_items" value="<%= courier.p_items%>" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="">Payment Mode</label>
+                    <input required type="text" name="p_payment" value="<%= courier.p_payment%>" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="">Delivery Date</label>
+                    <input required type="Date" name="p_delivery_date" value="<%= courier.p_delivery_date%>" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="">Depature Date</label>
+                    <input required type="Date" name="p_departure_date" value="<%= courier.p_departure_date%>" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="">Depature Time</label>
+                    <input required type="Time" name="p_departure_time" value="<%= courier.p_departure_time%>" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="">Pick Up Time</label>
+                    <input required type="Time" name="p_pickup_time" value="<%= courier.p_pickup_time%>" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="">Pick Up Date</label>
+                    <input required type="Date" name="p_pickup_date" value="<%= courier.p_pickup_date%>" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="">Has arrived</label>
+                    <select name="p_arrived" id="" class="form-control" value="<%= courier.p_arrived%>">
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="">Current Location</label>
+                    <input required type="text" name="p_location" value="<%= courier.p_location%>" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="">Comments</label>
+                    <input required type="text" name="p_comment" value="<%= courier.p_comment%>" class="form-control">
+                </div>
+                
+                <input required type="submit" class="btn btn-success" value="<%= btn %>">
+              </form>
+            </div>
+            <div class="col-1"></div>
+          </div>
+          
+        </div>
+      </div>
+        </div>
+        
+    </div>
+    </div>
+
+        
+    
+        
+    <!--===============================================================================================-->	
+        <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+        <script src="vendor/bootstrap/js/popper.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+        <script src="vendor/select2/select2.min.js"></script>
+    <!--===============================================================================================-->
+        <script src="js/script2.js"></script>
+    
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/popper.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/script3.js"></script>
+  </body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registeration Page</title>
+    <style>
+        input{
+            margin:5px;
+            height:30px;
+            width:100%;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <center>
+            <div style="margin-top: 5%;padding: 5%">
+                <h3>Login</h3>
+                <div style="color: rgb(238, 83, 11)">
+                    <% var error; var message; %>
+                    <% if(error){ %>
+                     <strong>Error: </strong>   <%= error %>
+                    <%} %>
+                </div>
+                <div style="color:rgb(52, 238, 151)">
+                    <% if(message){ %>
+                        <strong> </strong>   <%= message %>
+                    <%} %>
+                </div>
+                <form action="/api/user/login" method="POST" autocomplete="on">
+                    <input type="email" name="email" id="" placeholder="email" required><br>
+                    <input type="password" name="password" placeholder="password" required><br>
+                    <input type="submit" value="Login">
+                </form>
+            </div>
+        </center>
+    </div>
+</body>
+</html>

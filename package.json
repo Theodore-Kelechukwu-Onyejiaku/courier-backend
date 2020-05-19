@@ -1,0 +1,28 @@
+{
+  "name": "simple-express-app",
+  "version": "1.0.0",
+  "description": "This is a profile picture applicationn and processing of images  using NodeJs Express, Multer, Mongoose and MongoDB and JIMP",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon app.js",
+    "start": "node app.js"
+  },
+  "author": "Theodore Kelechukwu Onyejiaku",
+  "license": "ISC",
+  "dependencies": {
+    "@hapi/joi": "^17.1.1",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "ejs": "^3.0.1",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.25.3",
+    "mongoose": "^5.9.6"
+  },
+  "devDependencies": {
+    "handlebars": "^4.7.3",
+    "nodemon": "^2.0.4"
+  }
+}

@@ -116,6 +116,6 @@ app.post("/api/admin/registerAdmin", async(req, res)=>{
         .catch(err => {console.error(err)});
 })
 
-app.listen(5000, ()=>{
+app.listen(process.env.PORT || 5000, ()=>{
     console.log("Server running successfully on port: "+5000)
 })

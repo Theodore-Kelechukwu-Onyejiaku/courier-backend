@@ -3,14 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registeration Page</title>
-    <style>
-        input{
-            margin:5px;
-            height:30px;
-            width:100%;
-        }
-    </style>
+    <title>Login Page</title>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">		
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/style2.css">
 </head>
 <body>
     <div>
@@ -29,9 +25,15 @@
                     <%} %>
                 </div>
                 <form action="/api/user/login" method="POST" autocomplete="on">
-                    <input type="email" name="email" id="" placeholder="email" required><br>
-                    <input type="password" name="password" placeholder="password" required><br>
-                    <input type="submit" value="Login">
+                    <div class="form-group d-flex">
+                        <i class="text-warning fa fa-envelope fa-3x"></i><span> </span>
+                        <input type="email" name="email" class="form-control" placeholder="email">
+                      </div> 
+                      <div class="form-group d-flex">
+                        <i class="text-info fa fa-key fa-3x"></i><span> </span>
+                        <input id="password" type="password" name="password" class="form-control" placeholder="password">
+                      </div>
+                      <input type="submit" class="btn btn-success">
                 </form>
             </div>
         </center>

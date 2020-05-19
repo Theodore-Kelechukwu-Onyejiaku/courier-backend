@@ -1,7 +1,7 @@
 {
   "name": "simple-express-app",
   "version": "1.0.0",
-  "description": "This is a profile picture applicationn and processing of images  using NodeJs Express, Multer, Mongoose and MongoDB and JIMP",
+  "description": "",
   "main": "app.js",
   "scripts": {
     "dev": "nodemon app.js",

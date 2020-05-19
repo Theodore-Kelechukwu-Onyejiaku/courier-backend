@@ -21,7 +21,7 @@ const userRoute = require("./routes/user");
 const adminRoute = require("./routes/admin");
 
 //connectin to database
-mongoose.connect(process.env.DB_LOCAL, {useNewUrlParser: true, useUnifiedTopology: true } )
+mongoose.connect(process.env.DATABASE, {useNewUrlParser: true, useUnifiedTopology: true } )
     .then(()=>{console.log("Connected to Db")})
     .catch(err => {console.log("Error connecting to DB")})
 

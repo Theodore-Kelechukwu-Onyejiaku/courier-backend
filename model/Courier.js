@@ -57,19 +57,22 @@ const courierSchema = mongoose.Schema({
         type: String
     },
     p_delivery_date:{
-        type: Date
+        type: String
     },
     p_departure_date:{
-        type: Date
+        type: String
     },
     p_departure_time:{
+        type: String
+    },
+    p_id:{
         type: String
     },
     p_pickup_time:{
         type: String
     },
     p_pickup_date:{
-        type: Date
+        type: String
     },
     p_arrived: {
         type: String

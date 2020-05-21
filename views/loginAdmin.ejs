@@ -15,8 +15,14 @@
 			
         <div class="container">
           <h1 class="text-success text-center">Admin Login</h1>
-          <% var error; %>
-          <h3 class="text-danger text-center"><%= error %></h3>
+          <% var message; %>
+          <h3 class="text-danger text-center">
+            <% var error; var message; %>
+            <% if(error){ %>
+             <strong>Error: </strong>   <%= error %>
+            <%} %>
+          </h3>
+          <h3 class="text-danger text-center"><%= message %></h3>
           <div class="row">
             <div class="col-sm-1 col-md-3 col-lg-3 col-xl-3"></div>
             <div class="col-sm-10 col-md-6 col-lg-6 col-xl-6">

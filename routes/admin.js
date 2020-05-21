@@ -11,15 +11,37 @@ const User = require("../model/User");
 //Importing JWT
 const jwt = require("jsonwebtoken")
 
+//Verify token middleware
+function verify(req, res, next) {
+
+    var token = req.cookies.auth;
+  
+    // decode token
+    if (token) {
+  
+      jwt.verify(token, process.env.TOKEN_SECRET, function(err, token_data) {
+        if (err) {
+           return res.status(403).render('loginAdmin', {message: "Please Login"});
+        } else {
+          req.user_data = token_data;
+          next();
+        }
+      });
+    } else {
+      return res.status(403).render('loginAdmin', {message: "Please You Have To Login"});
+    }
+  }
+
+
 router.get("/", (req, res)=>{
     res.render("loginAdmin");
 })
 
-router.get("/addCourier", (req, res)=>{
+router.get("/addCourier",verify, (req, res)=>{
     res.render("addCourier", {message : "Add Courier", btn: "Create", courier: ""});
 })
 
-router.get("/viewCourier", (req, res)=>{
+router.get("/viewCourier", verify, (req, res)=>{
     Courier.find((err, doc)=>{
         if(!err){
             res.render("viewCourier", {doc: doc})
@@ -27,11 +49,10 @@ router.get("/viewCourier", (req, res)=>{
             res.render("viewCourier", {message: "Error, No courier gotten"})
         }
     })
-    
 })
 
 //Deleting a courier
-router.get("/delete/:id", (req, res)=>{
+router.get("/delete/:id", verify, (req, res)=>{
     Courier.findByIdAndRemove(req.params.id, (err, doc)=>{
         if(!err){
             res.redirect("/api/viewCourier");
@@ -44,7 +65,7 @@ router.get("/delete/:id", (req, res)=>{
 /**
  *  To get a single courier and update
  */
-router.get("/update/:id", (req, res)=>{
+router.get("/update/:id", verify, (req, res)=>{
     Courier.findById(req.params.id, (err, doc)=>{
         if(!err){
             res.render("updateCourier", {message: "Update Courier", courier: doc, btn: "Update"})
@@ -54,10 +75,19 @@ router.get("/update/:id", (req, res)=>{
     })
 })
 
+router.get("/logout", (req, res)=>{
+    res.cookie("auth", "");
+    res.render("loginAdmin")
+})
+
 //Login validation
 router.post("/login", async (req, res)=>{
+    var realUser ={
+        name: "Theoodre",
+    }
     //validating the user details before submittin to database
     const {error} = validateLogin(req.body);
+
     if(error){
       return  res.render("loginAdmin", {error :error.details[0].message});
     }
@@ -72,33 +102,35 @@ router.post("/login", async (req, res)=>{
     const validPass = await bcrypt.compare(req.body.password, user.password)
 
     //If the passwords do not match
-    if(!validPass) return res.render("login", {error: "Email or password is wrong"})
+    if(!validPass) return res.render("loginAdmin", {error: "Email or password is wrong"})
 
     //Create and assign a token
-    const token = jwt.sign({ _id: user._id}, process.env.TOKEN_SECRET, {  expiresIn: '30m' });
-    //res.header("auth-token", token).send(token);
-    //If email and password validation is correct  
+    const token = jwt.sign(realUser, process.env.TOKEN_SECRET, {  expiresIn: '59m' });
+   
+    
+    res.cookie('auth', token)
 
     res.redirect("/api/viewCourier")
 })
 
-router.post("/addCourier", (req, res)=>{
+router.post("/addCourier",  verify, (req, res)=>{
     if(req.body._id == ""){
         var departureTime = req.body.p_departure_time;
         var pickupTime = req.body.p_pickup_time;
         var pt = pickupTime.split("");
         var dt = departureTime.split("");
         if(Number(dt[0]) != 2 ){
-            departureTime = departureTime + "PM"
+            departureTime = departureTime 
         }else{
-            departureTime = departureTime + "AM"
+            departureTime = departureTime 
         }
     
         if(Number(pt[0]) !=2 ){
-            pickupTime = pickupTime + "PM"
+            pickupTime = pickupTime
         }else{
-            pickupTime = pickupTime + "AM"
+            pickupTime = pickupTime
         }
+        var stringArray = ["A","B", "C", "E", "F", "G","H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S","T", "U", "V", "W", "X", "Y", "Z"]
         const courier = new Courier({
             r_first_name : req.body.r_first_name,
             r_last_name: req.body.r_first_name,
@@ -116,6 +148,8 @@ router.post("/addCourier", (req, res)=>{
             p_destination: req.body.p_destination,
             p_weight: req.body.p_weight,
             p_mode: req.body.p_mode,
+            //Generate Random Number
+            p_id: Math.floor(Math.random() * 888888 + 111111) + stringArray[Math.floor(Math.random() * 23 + 1)] +  stringArray[Math.floor(Math.random() * 23 + 1)] + stringArray[Math.floor(Math.random() * 23 + 1)] + Math.floor(Math.random() * 888 + 111), 
             p_items: req.body.p_items,
             p_payment: req.body.p_payment,
             p_delivery_date: req.body.p_delivery_date,
